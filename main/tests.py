@@ -2,7 +2,7 @@ from django.test import TestCase
 
 # Create your tests here.
 from django.test import TestCase, Client
-from .models import News
+from .models import Product
 
 class MainTest(TestCase):
     def test_main_url_is_exist(self):
@@ -18,7 +18,7 @@ class MainTest(TestCase):
         self.assertEqual(response.status_code, 404)
 
     def test_news_creation(self):
-        news = News.objects.create(
+        news = Product.objects.create(
           title="BURHAN FC MENANG",
           content="BURHAN FC 1-0 PANDA BC",
           category="match",
@@ -30,7 +30,7 @@ class MainTest(TestCase):
         self.assertTrue(news.is_featured)
         
     def test_news_default_values(self):
-        news = News.objects.create(
+        news = Product.objects.create(
           title="Test News",
           content="Test content"
         )
@@ -40,7 +40,7 @@ class MainTest(TestCase):
         self.assertFalse(news.is_news_hot)
         
     def test_increment_views(self):
-        news = News.objects.create(
+        news = Product.objects.create(
           title="Test News",
           content="Test content"
         )
@@ -50,7 +50,7 @@ class MainTest(TestCase):
         
     def test_is_news_hot_threshold(self):
         # Test news with exactly 20 views (should not be hot)
-        news_20 = News.objects.create(
+        news_20 = Product.objects.create(
           title="News with 20 views",
           content="Test content",
           news_views=20
@@ -58,7 +58,7 @@ class MainTest(TestCase):
         self.assertFalse(news_20.is_news_hot)
         
         # Test news with 21 views (should be hot)
-        news_21 = News.objects.create(
+        news_21 = Product.objects.create(
           title="News with 21 views", 
           content="Test content",
           news_views=21
