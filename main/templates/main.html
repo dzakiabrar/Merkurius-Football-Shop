@@ -1,4 +1,7 @@
 <h1>Merkurius Football Shop</h1>
+<!-- menampilkan last login -->
+<h3>Welcome, {{ user.username }}</h3>
+<p>Last login: {{ last_login }}</p>
 
 <h5>NPM: </h5>
 <p>{{ npm }}</p>
@@ -13,6 +16,10 @@
   <button>+ Add New Product</button>
 </a>
 
+<a href="{% url 'main:logout' %}">
+  <button>Logout</button>
+</a>
+
 <hr>
 
 {% if not news_list %}
@@ -21,7 +28,7 @@
 
 {% for news in news_list %}
 <div>
-  <h2><a href="{% url 'main:show_news' news.id %}">{{ news.title }}</a></h2>
+  <h2><a href="{% url 'main:show_news' news.id %}">{{ news.name }}</a></h2>
 
   <p><b>{{ news.get_category_display }}</b>{% if news.is_featured %} | 
     <b>Featured</b>{% endif %}{% if news.is_news_hot %} | 
@@ -32,8 +39,11 @@
   <img src="{{ news.thumbnail }}" alt="thumbnail" width="150" height="100">
   <br />
   {% endif %}
+    <!-- menampilkan price -->
+  <p>Price: Rp {{ news.price }}</p>
 
-  <p>{{ news.content|truncatewords:25 }}...</p>
+    <!-- content jadi description -->
+  <p>{{ news.description|truncatewords:25 }}...</p>
 
   <p><a href="{% url 'main:show_news' news.id %}"><button>Read More</button></a></p>
 </div>
